@@ -1,22 +1,12 @@
 const express = require("express");
-const serverless = require("serverless-http");
 const axios = require("axios");
 const FormData = require("form-data");
 require("dotenv").config();
 
-const RESPONSE_TIMEOUT = 8_000;
+const RESPONSE_TIMEOUT = 10_000;
 const BASE_URL = "https://arsenkin.ru/tools/api/task";
 
 const app = express();
-
-app.use((req, res, next) => {
-    if (req.headers['content-length']) {
-        req.headers['content-length'] = Buffer.byteLength(JSON.stringify(req.body || {}));
-    }
-    next();
-});
-
-app.use(express.raw({ type: 'application/json' }));
 app.use(express.json());
 
 const postTask = async (tool, token, formData) => {
@@ -26,7 +16,7 @@ const postTask = async (tool, token, formData) => {
         headers: formData.getHeaders(),
     });
 
-    //await new Promise(resolve => setTimeout(resolve, RESPONSE_TIMEOUT));
+    await new Promise(resolve => setTimeout(resolve, RESPONSE_TIMEOUT));
     return response.data.task_id;
 }
 
@@ -68,11 +58,7 @@ app.post("/task", async (req, res) => {
 app.get("/result/:taskId", getTask);
 app.post("/result/:taskId", getTask);
 
-if (!process.env.VERCEL) {
-    const PORT = process.env.PORT || 8008;
-    app.listen(PORT, () => {
-        console.log(`Server is running on port ${PORT}`);
-    });
-}
-
-module.exports = serverless(app);
+const PORT = process.env.PORT || 8008;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
