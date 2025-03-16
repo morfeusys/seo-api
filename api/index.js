@@ -1,4 +1,5 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const axios = require("axios");
 const FormData = require("form-data");
 require("dotenv").config();
@@ -65,3 +66,4 @@ if (!process.env.VERCEL) {
 }
 
 module.exports = app;
+module.exports.handler = serverless(app);

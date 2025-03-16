@@ -1,11 +1,11 @@
 {
   "name": "api-seo",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "api/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "echo 'No build step needed for this project'",
-    "start": "node index.js"
+    "start": "node api/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "form-data": "^4.0.2",
+    "serverless-http": "^3.2.0",
     "vary": "^1.1.2"
   }
 }
