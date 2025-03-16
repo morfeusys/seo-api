@@ -3,7 +3,7 @@ const axios = require("axios");
 const FormData = require("form-data");
 require("dotenv").config();
 
-const RESPONSE_TIMEOUT = 5_000;
+const RESPONSE_TIMEOUT = 8_000;
 const BASE_URL = "https://arsenkin.ru/tools/api/task";
 
 const app = express();
