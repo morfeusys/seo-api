@@ -30,7 +30,7 @@ const getTask = async (req, res) => {
         const response = await axios.get(fullUrl);
         if (response.data.error_code === -1) {
             await new Promise(resolve => setTimeout(resolve, RESPONSE_TIMEOUT));
-            res.redirect(`/api/result/${taskId}?token=${token}`);
+            res.redirect(`/result/${taskId}?token=${token}`);
         } else if (response.data.error) {
             res.status(500).json({ success: false, error: response.data.error });
         } else {
@@ -41,7 +41,7 @@ const getTask = async (req, res) => {
     }
 }
 
-app.post("/api/task", async (req, res) => {
+app.post("/task", async (req, res) => {
     try {
         const formData = new FormData();
         Object.entries(req.body).forEach(([key, value]) => {
@@ -49,14 +49,14 @@ app.post("/api/task", async (req, res) => {
         });
         const { tool, token } = req.query;
         const taskId = await postTask(tool, token, formData);
-        res.redirect(`/api/result/${taskId}?token=${token}`);
+        res.redirect(`/result/${taskId}?token=${token}`);
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
 });
 
-app.get("/api/result/:taskId", getTask);
-app.post("/api/result/:taskId", getTask);
+app.get("/result/:taskId", getTask);
+app.post("/result/:taskId", getTask);
 
 if (!process.env.VERCEL) {
     const PORT = process.env.PORT || 8008;
