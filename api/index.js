@@ -8,6 +8,15 @@ const RESPONSE_TIMEOUT = 8_000;
 const BASE_URL = "https://arsenkin.ru/tools/api/task";
 
 const app = express();
+
+app.use((req, res, next) => {
+    if (req.headers['content-length']) {
+        req.headers['content-length'] = Buffer.byteLength(JSON.stringify(req.body || {}));
+    }
+    next();
+});
+
+app.use(express.raw({ type: 'application/json' }));
 app.use(express.json());
 
 const postTask = async (tool, token, formData) => {
