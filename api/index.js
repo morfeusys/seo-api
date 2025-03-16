@@ -17,7 +17,7 @@ const postTask = async (tool, token, formData) => {
         headers: formData.getHeaders(),
     });
 
-    await new Promise(resolve => setTimeout(resolve, RESPONSE_TIMEOUT));
+    //await new Promise(resolve => setTimeout(resolve, RESPONSE_TIMEOUT));
     return response.data.task_id;
 }
 
@@ -49,7 +49,8 @@ app.post("/task", async (req, res) => {
         });
         const { tool, token } = req.query;
         const taskId = await postTask(tool, token, formData);
-        res.redirect(`/result/${taskId}?token=${token}`);
+        //res.redirect(`/result/${taskId}?token=${token}`);
+        res.json({taskId});
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
