@@ -48,8 +48,7 @@ app.post("/task", async (req, res) => {
         });
         const { tool, token } = req.query;
         const taskId = await postTask(tool, token, formData);
-        //res.redirect(`/result/${taskId}?token=${token}`);
-        res.json({taskId});
+        res.redirect(`/result/${taskId}?token=${token}`);
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
