@@ -33,7 +33,15 @@ const getTask = async (req, res) => {
         } else if (response.data.error) {
             res.status(500).json({ success: false, error: response.data.error });
         } else {
-            res.json(response.data);
+            const data = response.data;
+            if (Array.isArray(data)) {
+                data.forEach(item => {
+                    if (item.left) {
+                        item.left = Object.fromEntries(Object.entries(item.left).slice(0, 10));
+                    }
+                });
+            }
+            res.json(data);
         }
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
